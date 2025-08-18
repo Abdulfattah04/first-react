@@ -1,4 +1,4 @@
-import "./ProductList.css"
+import style from "./ProductCard.module.css"
 
 export function ProductCard({ 
   product, 
@@ -9,7 +9,7 @@ export function ProductCard({
   return (
     <article 
       style={{background}}
-      className='Container'
+      className={style.Container}
     >
       <h2>{product.title}</h2>
       <img 
@@ -19,7 +19,7 @@ export function ProductCard({
         height={128}
       />
       <p>Expertise</p>
-      <ul className="Specification">
+      <ul className={style.Specification}>
         {product.specification.map((spec, index) => (
           <li key={index}>{spec}</li>
         ))}
@@ -36,13 +36,13 @@ export function ProductCard({
 
 function Status({ stockCount }) {
   const notAvailableTemplate = (
-    <p className="NotAvailableStatus">
+    <p className={style.NotAvailableStatus}>
       Not available
     </p>
   );
 
   const availableTemplate = (
-    <p className="AvailableStatus">
+    <p className={style.AvailableStatus}>
       {stockCount} items available
     </p>
   );

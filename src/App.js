@@ -1,5 +1,5 @@
 import { Fragment } from 'react/jsx-runtime';
-import './App.css';
+import style from './App.module.css';
 import { ProductList } from './components/ProductList';
 import { ProductCard } from './components/ProductCard';
  
@@ -49,7 +49,7 @@ function handlePurchase(product) {
 }
 
   return (
-    <div className="App">
+    <div className={style.App}>
       <ProductList>
         {products.map((product => 
           <ProductCard 
@@ -65,8 +65,8 @@ function handlePurchase(product) {
          .filter(({ price })=> price < 500)
          .map(({title, price})=> (
          <Fragment key={title}>
-           <hr className='ListDivider'/>
-           <p className='ListTitle'>
+           <hr className={style.ListDivider}/>
+           <p className={style.ListTitle}>
             {title} cost ${price}
            </p>
          </Fragment>
