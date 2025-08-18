@@ -1,40 +1,51 @@
-export function ProductCard() {
-    const  product = {
-        imageSrc: 'images/iphone.png',
-        title: 'FruityLife',
-        specification: [
-            'Electronic Technician',
-            'Decoder Installation',
-            'Web Developer',
-            'Teacher'
-        ],
-        price: 500
-    };
+import "./ProductList.css"
+
+export function ProductCard({ 
+  product, 
+  background = "slategray", 
+  onPurchase,
+}) {
 
   return (
     <article 
-      style={{ 
-        border: '1px solid white', 
-        borderRadius: '8px', 
-        padding: '16px', 
-        textAlign: 'center'
-      }}
+      style={{background}}
+      className='Container'
     >
       <h2>{product.title}</h2>
       <img 
-        src={product.imageSrc}  
-        width='128px' 
-        height='128px' 
+        src={product.imageSrc} 
         alt={product.title}
+        width={128}
+        height={128}
       />
       <p>Expertise</p>
-      <ul style={{listStyle: "none", padding: 0}}>
-        <li>{product.specification[0]}</li>
-        <li>{product.specification[1]}</li>
-        <li>{product.specification[2]}</li>
-        <li>{product.specification[3]}</li>
+      <ul className="Specification">
+        {product.specification.map((spec, index) => (
+          <li key={index}>{spec}</li>
+        ))}
       </ul>
-      <button>Pay ${product.price}</button>
+      <Status stockCount={product.stockCount} />
+      { product.stockCount > 0 && (
+        <button onClick={() => onPurchase(product)}>
+        Pay ${product.price}
+        </button>
+      )}
     </article>
   );
+}
+
+function Status({ stockCount }) {
+  const notAvailableTemplate = (
+    <p className="NotAvailableStatus">
+      Not available
+    </p>
+  );
+
+  const availableTemplate = (
+    <p className="AvailableStatus">
+      {stockCount} items available
+    </p>
+  );
+
+  return stockCount === 0 ? notAvailableTemplate : availableTemplate;
 }
