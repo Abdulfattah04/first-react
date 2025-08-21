@@ -1,10 +1,12 @@
 import { useState } from "react"; 
-import style from "./ProductCard.module.css"
+import styles from "./ProductCard.module.css"
 
 export function ProductCard({ 
   product, 
+  isFavorite,
   background = "slategray", 
   onPurchase,
+  onFavorite
 }) {
   const [stockCount, setStockCount] = useState(product.stockCount)
   const [showMore, setShowMore] = useState(false)
@@ -15,16 +17,19 @@ export function ProductCard({
   }
 
   function handleTwoClicks() {
-    setStockCount((prevStockCount)=> prevStockCount - 1)
-    setStockCount((prevStockCount)=> prevStockCount - 1)
+    setStockCount((prevStockCount)=> prevStockCount - 1) // 6 -1
+    setStockCount((prevStockCount)=> prevStockCount - 1) // 5 -1
   }
 
 
   return (
-    <article 
-      style={{background}}
-      className={style.Container}
-    >
+    <article style={{background}} className={styles.Container}>
+      <button 
+        className={styles.Favorite} 
+        onClick={()=> onFavorite(product.id)}
+      >
+        {isFavorite ?  '❤️' : '🤍'}
+      </button>
       <h2>{product.title}</h2>
       <img 
         src={product.imageSrc} 
@@ -35,7 +40,7 @@ export function ProductCard({
       <p>Expertise: {' '}
         <button onClick={()=> setShowMore(!showMore)}>{showMore ? "hide" : "show"}</button>
       </p>
-      {showMore && <ul className={style.Specification}>
+      {showMore && <ul className={styles.Specification}>
         {product.specification.map((spec, index) => (
           <li key={index}>{spec}</li>
         ))}
@@ -56,13 +61,13 @@ export function ProductCard({
 
 function Status({ stockCount }) {
   const notAvailableTemplate = (
-    <p className={style.NotAvailableStatus}>
+    <p className={styles.NotAvailableStatus}>
       Not available
     </p>
   );
 
   const availableTemplate = (
-    <p className={style.AvailableStatus}>
+    <p className={styles.AvailableStatus}>
       {stockCount} items available
     </p>
   );
